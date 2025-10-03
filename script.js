@@ -1,5 +1,5 @@
 const player = document.querySelector('.player');
-const video = player.querySelector('.viewer');
+const video = player.querySelector('.player__video');
 const toggle = player.querySelector('.toggle');
 const skipButtons = player.querySelectorAll('[data-skip]');
 const ranges = player.querySelectorAll('.player__slider');
@@ -12,29 +12,29 @@ function togglePlay() {
   video[method]();
 }
 
-// Update Play Button Icon
+// Update Play Button (► / ❚ ❚)
 function updateButton() {
   const icon = video.paused ? '►' : '❚ ❚';
   toggle.textContent = icon;
 }
 
-// Skip Video
+// Skip Forward/Backward
 function skip() {
   video.currentTime += parseFloat(this.dataset.skip);
 }
 
-// Handle Range Updates (volume & speed)
+// Handle Volume / Speed
 function handleRangeUpdate() {
   video[this.name] = this.value;
 }
 
-// Update Progress Bar
+// Progress Bar Update
 function handleProgress() {
   const percent = (video.currentTime / video.duration) * 100;
   progressBar.style.width = `${percent}%`;
 }
 
-// Scrub (when clicking on progress bar)
+// Scrub Progress Bar
 function scrub(e) {
   const scrubTime = (e.offsetX / progress.offsetWidth) * video.duration;
   video.currentTime = scrubTime;
@@ -47,7 +47,6 @@ video.addEventListener('pause', updateButton);
 video.addEventListener('timeupdate', handleProgress);
 
 toggle.addEventListener('click', togglePlay);
-
 skipButtons.forEach(button => button.addEventListener('click', skip));
 ranges.forEach(range => range.addEventListener('input', handleRangeUpdate));
 
